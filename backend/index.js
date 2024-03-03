@@ -6,7 +6,9 @@ import dotenv from "dotenv";
 import multer from "multer";
 import helmet from "helmet";
 import path from "path";
+import authroutes from "./routes/auth.js";
 import { fileURLToPath } from "url";
+import { register } from "./controllers/auth.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -28,13 +30,15 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
+app.post("/auth/register", upload.single("picture"), register);
+app.use("/auth", authroutes);
 const PORT = 3000;
 mongoose
   .connect(
-    "mongodb+srv://chawlamanav71:5OLTA0Ol8e4bpatC@cluster0.jgpp4jq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    `mongodb+srv://chawlamanav71:${process.env.MONGO_URI}@cluster0.jgpp4jq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,
     {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      //   useNewUrlParser: true,
+      //   useUnifiedTopology: true,
     }
   )
   .then(() => {
