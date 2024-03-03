@@ -7,6 +7,7 @@ import multer from "multer";
 import helmet from "helmet";
 import path from "path";
 import authroutes from "./routes/auth.js";
+import userroutes from "./routes/user.js";
 import { fileURLToPath } from "url";
 import { register } from "./controllers/auth.js";
 const __filename = fileURLToPath(import.meta.url);
@@ -32,6 +33,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 app.post("/auth/register", upload.single("picture"), register);
 app.use("/auth", authroutes);
+app.use("/users", userroutes);
 const PORT = 3000;
 mongoose
   .connect(
