@@ -8,8 +8,11 @@ import helmet from "helmet";
 import path from "path";
 import authroutes from "./routes/auth.js";
 import userroutes from "./routes/user.js";
+import postroutes from "./routes/posts.js";
+import { verifytoken } from "./middleware/auth.js";
 import { fileURLToPath } from "url";
 import { register } from "./controllers/auth.js";
+import { createpost } from "./controllers/posts.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -32,8 +35,10 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 app.post("/auth/register", upload.single("picture"), register);
+app.post("/posts", verifytoken, upload.single("picture"), createpost);
 app.use("/auth", authroutes);
 app.use("/users", userroutes);
+app.use("/posts", postroutes);
 const PORT = 3000;
 mongoose
   .connect(
