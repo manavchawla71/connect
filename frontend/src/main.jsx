@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import { authreducer } from "./state/index.js";
+import authReducer from "./state/index.js";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import {
@@ -29,7 +29,7 @@ const store = configureStore({
     }),
 });
 
-import "./index.css";
+// import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
